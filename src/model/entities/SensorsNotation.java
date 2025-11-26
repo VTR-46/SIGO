@@ -1,9 +1,11 @@
 package model.entities;
 
+import model.services.SensorRules;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SensorsNotation {
+public class SensorsNotation implements SensorRules {
 
     public double average;
     public double bigger;
@@ -38,22 +40,9 @@ public class SensorsNotation {
         return  this.average = a;
     }
 
-    public double Bigger(TemperatureSensor sensorLe){
+    public double Bigger(){
 
-        double b = sensorList.get(0).getTemp();
-
-        for (TemperatureSensor sensorL : sensorList){
-            if (b > sensorL.getTemp()){
-                b = sensorL.getTemp();
-            }
-        }
-
-        return this.bigger = b;
-    }
-
-    public double Smaller(TemperatureSensor sensorLe){
-
-        double b = sensorList.get(0).getTemp();
+        double b = sensorList.getFirst().getTemp();
 
         for (TemperatureSensor sensorL : sensorList){
             if (b < sensorL.getTemp()){
@@ -61,7 +50,44 @@ public class SensorsNotation {
             }
         }
 
+        return this.bigger = b;
+    }
+
+    public double Smaller(){
+
+        double b = sensorList.getFirst().getTemp();
+
+        for (TemperatureSensor sensorL : sensorList){
+            if (b > sensorL.getTemp()){
+                b = sensorL.getTemp();
+            }
+        }
+
         return this.smaller = b;
+    }
+
+    public void List(){
+        System.out.println("NOME \t TEMPERATURA \t STATUS");
+        for (TemperatureSensor sensorL : sensorList){
+            System.out.println(sensorL.getName() + " \t " + sensorL.getTemp() + " \t " + sensorL.getStatus().getDescription());
+        }
+    }
+
+    @Override
+    public boolean ValidTemperature(double Temp) {
+        if (Temp < -20 || Temp > 200){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "\nTemperaturas Registradas\n" +
+                "\nMedia " + average +
+                "\nMaior " + bigger +
+                "\nMenor " + smaller;
     }
 
 

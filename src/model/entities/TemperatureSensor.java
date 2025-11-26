@@ -1,20 +1,25 @@
 package model.entities;
 
+import model.entities.enums.SensorStatus;
 import model.services.SensorRules;
+
+import java.time.LocalDateTime;
 
 public class TemperatureSensor implements SensorRules {
 
     private String name;
-    private boolean active;
     private double temp;
+    private SensorStatus status;
+    private String dateTimeCreation;
 
     public TemperatureSensor(){
     }
 
-    public TemperatureSensor(String name, double temp, boolean active) {
+    public TemperatureSensor(String name, String dateTimeCreation, SensorStatus status, double temp) {
         this.name = name;
+        this.dateTimeCreation = dateTimeCreation;
         this.temp = temp;
-        this.active = active;
+        this.status = status;
     }
 
     @Override
@@ -43,11 +48,11 @@ public class TemperatureSensor implements SensorRules {
         this.temp = temp;
     }
 
-    public boolean isActive() {
-        return active;
+    public SensorStatus getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setStatus(SensorStatus status) {
+        this.status = status;
     }
 }

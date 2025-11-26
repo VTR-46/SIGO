@@ -1,8 +1,10 @@
 package application;
 
 import model.entities.*;
+import model.entities.enums.SensorStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,7 @@ public class Main {
                     break;
 
                 case 2:
+
                     do {
 
                         MachineMenu();
@@ -113,6 +116,76 @@ public class Main {
                     break;
 
                 case 3:
+                    scanerMenu();
+                    opX = sc.nextInt();
+
+                    switch (opX) {
+                        case 1:                 //Criação de um novo sensor | Creating a new sensor
+                            boolean ok = false;
+
+                            System.out.println("Nome do novo sensor: ");
+                            String sName = sc.next();
+
+                            double sTemp = 0;
+                            do {
+
+                                System.out.println("Sua temperatura atual:");
+                                sTemp = sc.nextDouble();
+
+
+
+                                if (sensorsNotation.ValidTemperature(sTemp) == false){  //Validação da temperatura | Temperature validation
+                                    System.out.println("TEMPERATURA INVALIDA!!!");
+                                    ok = false;
+                                }else {
+                                    ok = true;
+                                }
+                            }while (ok != true);
+
+                            LocalDateTime dateTime = LocalDateTime.now();
+                            String dateTimeF = dateTime.format(fmt);
+
+                            System.out.println("Status ([A]-ATIVO / [D]-DESATIVADO)");
+                            sc.nextLine();
+                            char statusop = sc.next().charAt(0);
+                            SensorStatus status = null;
+
+                            ok = false;
+                            do {
+                                if (statusop == 'a' || statusop == 'A') {
+
+                                    status = SensorStatus.ACTIVE;
+                                    ok = true;
+
+                                } else if (statusop == 'd' || statusop == 'D') {
+
+                                    status = SensorStatus.DISABLE;
+                                    ok = true;
+
+                                }else {
+                                    ok = false;
+                                }
+                            }while (ok != true);
+
+                            TemperatureSensor temperatureSensor = new TemperatureSensor(sName, dateTimeF, status, sTemp);
+
+                            sensorsNotation.addSensor(temperatureSensor);
+
+                            break;
+
+                        case 2:                     //Visualizar todos os sensores | View all sensors
+                            sensorsNotation.List();
+                            break;
+
+                        case 3:                     //Dados de media maiores e menores temperaturas entre todos os sensores | Average temperature data from all sensors
+                            sensorsNotation.averageCalc();
+                            sensorsNotation.Bigger();
+                            sensorsNotation.Smaller();
+                            System.out.println(sensorsNotation);
+
+
+
+                    }
 
 
             }
@@ -137,9 +210,10 @@ public class Main {
         System.out.println("[3]-Relatorio da Máquina");
     }
 
-    public static void scanerMenu(){
+    public static void scanerMenu() {
         System.out.println("[1]-Novo Sensor");
-        System.out.println("[2]-");
+        System.out.println("[2]-Todos Sensores");
+        System.out.println("[3]-Dados");
     }
 
 
