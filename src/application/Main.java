@@ -23,14 +23,16 @@ public class Main {
         ProductionMachine machine = new ProductionMachine("Maquina A1D1", 0, true, 0);
         SensorsNotation sensorsNotation = new SensorsNotation(0, 0, 0);
 
-        menuGPS();
-        int op = sc.nextInt();
+
+        int op;
         int opX = 0;
 
         do {
+            menuGPS();
+            op = sc.nextInt();
 
             switch (op) {
-                case 1:
+                case 1:                         //PRODUTOS
                     System.out.println("Quantos produtos de seja adicionar?");
                     int n = sc.nextInt();
 
@@ -70,7 +72,7 @@ public class Main {
 
                     break;
 
-                case 2:
+                case 2:         //MAQUINAS
 
                     do {
 
@@ -110,84 +112,87 @@ public class Main {
                                 System.out.println("Relatorio:");
                                 System.out.println(machine);
                                 break;
+
                         }
 
                     } while (opX != 0);
                     break;
 
-                case 3:
-                    scanerMenu();
-                    opX = sc.nextInt();
+                case 3:             //SENSORES
+                    do {
+                        scanerMenu();
+                        opX = sc.nextInt();
 
-                    switch (opX) {
-                        case 1:                 //Criação de um novo sensor | Creating a new sensor
-                            boolean ok = false;
+                        switch (opX) {
+                            case 1:                 //Criação de um novo sensor | Creating a new sensor
+                                boolean ok = false;
 
-                            System.out.println("Nome do novo sensor: ");
-                            String sName = sc.next();
+                                System.out.println("Nome do novo sensor: ");
+                                String sName = sc.next();
 
-                            double sTemp = 0;
-                            do {
+                                double sTemp = 0;
+                                do {
 
-                                System.out.println("Sua temperatura atual:");
-                                sTemp = sc.nextDouble();
-
-
-
-                                if (sensorsNotation.ValidTemperature(sTemp) == false){  //Validação da temperatura | Temperature validation
-                                    System.out.println("TEMPERATURA INVALIDA!!!");
-                                    ok = false;
-                                }else {
-                                    ok = true;
-                                }
-                            }while (ok != true);
-
-                            LocalDateTime dateTime = LocalDateTime.now();
-                            String dateTimeF = dateTime.format(fmt);
-
-                            System.out.println("Status ([A]-ATIVO / [D]-DESATIVADO)");
-                            sc.nextLine();
-                            char statusop = sc.next().charAt(0);
-                            SensorStatus status = null;
-
-                            ok = false;
-                            do {
-                                if (statusop == 'a' || statusop == 'A') {
-
-                                    status = SensorStatus.ACTIVE;
-                                    ok = true;
-
-                                } else if (statusop == 'd' || statusop == 'D') {
-
-                                    status = SensorStatus.DISABLE;
-                                    ok = true;
-
-                                }else {
-                                    ok = false;
-                                }
-                            }while (ok != true);
-
-                            TemperatureSensor temperatureSensor = new TemperatureSensor(sName, dateTimeF, status, sTemp);
-
-                            sensorsNotation.addSensor(temperatureSensor);
-
-                            break;
-
-                        case 2:                     //Visualizar todos os sensores | View all sensors
-                            sensorsNotation.List();
-                            break;
-
-                        case 3:                     //Dados de media maiores e menores temperaturas entre todos os sensores | Average temperature data from all sensors
-                            sensorsNotation.averageCalc();
-                            sensorsNotation.Bigger();
-                            sensorsNotation.Smaller();
-                            System.out.println(sensorsNotation);
+                                    System.out.println("Sua temperatura atual:");
+                                    sTemp = sc.nextDouble();
 
 
 
-                    }
+                                    if (sensorsNotation.ValidTemperature(sTemp) == false){  //Validação da temperatura | Temperature validation
+                                        System.out.println("TEMPERATURA INVALIDA!!!");
+                                        ok = false;
+                                    }else {
+                                        ok = true;
+                                    }
+                                }while (ok != true);
+
+                                LocalDateTime dateTime = LocalDateTime.now();
+                                String dateTimeF = dateTime.format(fmt);
+
+                                System.out.println("Status ([A]-ATIVO / [D]-DESATIVADO)");
+                                sc.nextLine();
+                                char statusop = sc.next().charAt(0);
+                                SensorStatus status = null;
+
+                                ok = false;
+                                do {
+                                    if (statusop == 'a' || statusop == 'A') {
+
+                                        status = SensorStatus.ACTIVE;
+                                        ok = true;
+
+                                    } else if (statusop == 'd' || statusop == 'D') {
+
+                                        status = SensorStatus.DISABLE;
+                                        ok = true;
+
+                                    }else {
+                                        ok = false;
+                                    }
+                                }while (ok != true);
+
+                                TemperatureSensor temperatureSensor = new TemperatureSensor(sName, dateTimeF, status, sTemp);
+
+                                sensorsNotation.addSensor(temperatureSensor);
+
+                                break;
+
+                            case 2:                     //Visualizar todos os sensores | View all sensors
+                                sensorsNotation.List();
+                                break;
+
+                            case 3:                     //Dados de media maiores e menores temperaturas entre todos os sensores | Average temperature data from all sensors
+                                sensorsNotation.averageCalc();
+                                sensorsNotation.Bigger();
+                                sensorsNotation.Smaller();
+                                System.out.println(sensorsNotation);
 
 
+
+
+                        }
+
+                    }while (opX != 0);
             }
 
 
@@ -198,9 +203,10 @@ public class Main {
 
     public static void menuGPS() {
         System.out.println("--===== Gestão de Produtos e Serviços =====--");
-        System.out.println("[1]-Produtos");
+        System.out.println("[1]-Cadastrar Produto");
         System.out.println("[2]-Máquinas/Produção");
         System.out.println("[3]-Sensores");
+        System.out.println("[0]-SAIR");
     }
 
     public static void MachineMenu() {
@@ -208,12 +214,14 @@ public class Main {
         System.out.println("[1]-Nova Produção");
         System.out.println("[2]-Total Produzido");
         System.out.println("[3]-Relatorio da Máquina");
+        System.out.println("[0]-SAIR");
     }
 
     public static void scanerMenu() {
         System.out.println("[1]-Novo Sensor");
         System.out.println("[2]-Todos Sensores");
         System.out.println("[3]-Dados");
+        System.out.println("[0]-SAIR");
     }
 
 
