@@ -25,15 +25,6 @@ public class ProductionMachine implements MachineRules {
 
     }
 
-    @Override
-    public boolean NegativeRule(double amountEntered) {
-        if (amountEntered < 0){
-            return false;
-        }else {
-            return true;
-        }
-
-    }
 
     public void addProduct(ManuProduct manuProduct){
         manuProducts.add(manuProduct);
@@ -51,7 +42,7 @@ public class ProductionMachine implements MachineRules {
     }
 
     public double increaseDamege(){
-        return this.defectRate += 0.5;
+        return this.defectRate += 0.5;      //0,5 de defeito na maquina a cada fabricação
     }
 
     public String getName() {
