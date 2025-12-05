@@ -16,11 +16,14 @@ public class Main {
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        double TAX = 50;
+        double TAX = 50;    //TAXA que sera somada ao produto importado
 
-        List<ComumProduct> list = new ArrayList<>();
+        List<ComumProduct> list = new ArrayList<>();    //LISTA DOS PRODUTOS
 
+        //MAQUINA
         ProductionMachine machine = new ProductionMachine("Maquina A1D1", 0, true, 0);
+
+        //SENSOR
         SensorsNotation sensorsNotation = new SensorsNotation(0, 0, 0);
 
 
@@ -50,6 +53,7 @@ public class Main {
                         System.out.println("Tipo do produto (COMUM[c] | IMPORTADO[i] | USADO[u]) ");
                         char type = sc.next().charAt(0);
 
+                        //U = USADO, I = IMPORTADO, C = COMUM
                         if (type == 'u' || type == 'U') {
                             System.out.println("Qual a data de fabricação do produto usado?");
                             LocalDate date = LocalDate.parse(sc.next(), fmt);
@@ -65,6 +69,7 @@ public class Main {
 
                     }
 
+                    //Lista dos produtos
                     System.out.println("Lista:");
                     for (ComumProduct product : list) {
                         product.priceTag();
@@ -72,7 +77,7 @@ public class Main {
 
                     break;
 
-                case 2:         //MAQUINAS
+                case 2:         //MAQUINA/PRODUÇÃO
 
                     do {
 
@@ -84,7 +89,7 @@ public class Main {
                                 System.out.println("Digite a quantidade que sera produzida");
                                 int p = sc.nextInt();
 
-                                if (machine.NegativeRule(p) == true) {
+                                if (machine.NegativeRule(p) == true) {      //Validação
 
 
                                     for (int i = 0; i < p; i++) {
@@ -97,7 +102,7 @@ public class Main {
                                         System.out.println(nmMP + ", Foi produzido(a).");
                                         machine.addProduct(manuProduct);
                                         machine.increaseProductAmount(1);
-                                        machine.increaseDamege();
+                                        machine.increaseDamege();   //TAXA DE DEFEITO SENDO AUMENTADA A CADA PRODUÇÃO
                                     }
                                     break;
                                 } else {
@@ -152,6 +157,7 @@ public class Main {
                                 System.out.println("Status ([A]-ATIVO / [D]-DESATIVADO)");
                                 sc.nextLine();
                                 char statusop = sc.next().charAt(0);
+
                                 SensorStatus status = null;
 
                                 ok = false;
@@ -198,9 +204,10 @@ public class Main {
 
         } while (op != 0);
 
-
+        sc.close();
     }
 
+    //Funções para imprimir os menus
     public static void menuGPS() {
         System.out.println("--===== Gestão de Produtos e Serviços =====--");
         System.out.println("[1]-Cadastrar Produto");
