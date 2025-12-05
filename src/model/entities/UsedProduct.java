@@ -17,6 +17,7 @@ public class UsedProduct extends  ComumProduct{
 
     @Override
     public void priceTag(){
-        super.priceTag();
+        System.out.println("[U]-" + super.getName() + ", R$" + String.format("%.2f", super.getValue()) + ", Quantidade: "+ super.getAmount() + ", Fabricado: " + date);
+
     }
 }

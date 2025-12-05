@@ -17,7 +17,19 @@ public class ComumProduct {
 
 
     public void priceTag(){
-        System.out.println("R$" + String.format("%.2f", value));
+        System.out.println("[C]-" + getName() + ", R$" + String.format("%.2f", value) + ", Quantidade: " + amount);
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public double getValue() {
+        return value;
     }
 }

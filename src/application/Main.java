@@ -38,7 +38,7 @@ public class Main {
 
                     for (int i = 0; i < n; i++) {
                         System.out.println("Nome do produto:");
-                        sc.next();
+                        sc.nextLine();
                         String name = sc.nextLine();
 
                         System.out.println("Preço do Produto");

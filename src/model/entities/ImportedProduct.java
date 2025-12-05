@@ -12,9 +12,13 @@ public class ImportedProduct extends ComumProduct{
         this.TAX = TAX;
     }
 
+    public double priceTax(){
+        return TAX + super.getValue();
+    }
+
     @Override
     public void priceTag(){
-        super.priceTag();
+        System.out.println("[I]-" + super.getName() + ", R$" + String.format("%.2f", priceTax())  + ", Quantidade: "+ super.getAmount());
     }
 
 }
