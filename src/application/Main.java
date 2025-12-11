@@ -1,10 +1,12 @@
 package application;
 
 import model.entities.*;
+import model.entities.enums.ReserveStatus;
 import model.entities.enums.SensorStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter hrt = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         double TAX = 50;    //TAXA que sera somada ao produto importado
 
         List<ComumProduct> list = new ArrayList<>();    //LISTA DOS PRODUTOS
+        List<Client> clients = new ArrayList<>();
 
         //MAQUINA
         ProductionMachine machine = new ProductionMachine("Maquina A1D1", 0, true, 0);
@@ -199,6 +203,63 @@ public class Main {
                         }
 
                     }while (opX != 0);
+                    break;
+
+                case 4:
+
+                    System.out.println("Nome do cliente:");
+                    String clientName = sc.next();
+
+                    System.out.println("Email do cliente: ");
+                    String email = sc.next();
+
+                    System.out.println("Data de nascimento:");
+                    LocalDate birth = LocalDate.parse(sc.next(), fmt);
+
+                    Client client = new Client(clientName, birth, email);
+
+                    System.out.println("Quantidade de reservas do cliente " + clientName + ":");
+                    int reservesAmount = sc.nextInt();
+
+                    for (int i = 0; i < reservesAmount; i++) {
+
+                        System.out.println("Data da reseva:");
+                        LocalDate rDate = LocalDate.parse(sc.next(), fmt);
+
+                        System.out.println("Horario da reserva:");
+                        LocalTime rTime = LocalTime.parse(sc.next(), hrt);
+
+                        System.out.println("Status da reserva (PENDENTE, CANCELADA, CONFIRMADA): ");
+                        ReserveStatus status = ReserveStatus.valueOf(sc.next());
+
+                        Reserve reserve = new Reserve(rDate, rTime, status, client);
+
+                        System.out.println("Quantos itens essa reserva possui:");
+                        int in = sc.nextInt();
+
+                        for (int j = 0; j < in; j++) {
+                            System.out.println("Nome do destino:");
+                            String dName = sc.next();
+
+                            System.out.println("Preço unitario: ");
+                            double dPrice = sc.nextDouble();
+
+                            Destination destination = new Destination(dName, dPrice);
+
+                            System.out.println("Quanidade: ");
+                            int dAmount = sc.nextInt();
+
+                            ReserveItem reserveItem = new ReserveItem(dAmount, destination);
+
+                            reserve.addItem(reserveItem);
+                        }
+
+                        System.out.println(reserve);
+                    }
+
+                    break;
+
+
             }
 
 
@@ -213,6 +274,7 @@ public class Main {
         System.out.println("[1]-Cadastrar Produto");
         System.out.println("[2]-Máquinas/Produção");
         System.out.println("[3]-Sensores");
+        System.out.println("[4]-Clintes e Reservas");
         System.out.println("[0]-SAIR");
     }
 
@@ -229,6 +291,10 @@ public class Main {
         System.out.println("[2]-Todos Sensores");
         System.out.println("[3]-Dados");
         System.out.println("[0]-SAIR");
+    }
+
+    public static void clienteReservaMenu(){
+        System.out.println("[1]-Nova Reserva");
     }
 
 
