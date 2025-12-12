@@ -3,6 +3,7 @@ package application;
 import model.entities.*;
 import model.entities.enums.ReserveStatus;
 import model.entities.enums.SensorStatus;
+import model.services.ContractService;
 import model.services.PaymentService;
 
 import java.time.LocalDate;
@@ -295,8 +296,37 @@ public class Main {
                     payment.setFinalAmount(af);
 
                     System.out.println(payment);
+                    break;
+                case 6:
+                    System.out.println("Entre os dados do contrato >>");
 
+                    System.out.print("Numero: ");
+                    int number = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Data (dd/MM/yyyy): ");
+                    LocalDate date = LocalDate.parse(sc.nextLine(), fmt);
+
+                    System.out.print("Valor do contrato: ");
+                    double totalValue = sc.nextDouble();
+
+                    Contract contract = new Contract(number, totalValue, date);
+
+                    System.out.print("Entre com o numero de parcelas: ");
+                    int months = sc.nextInt();
+
+                    ContractService cs = new ContractService(new PaypalService());
+                    cs.processContract(contract, months);
+
+                    System.out.println("Parcelas:");
+                    for (Installment it : contract.getInstallments()) {
+                        System.out.println(it.getDueDate().format(fmt) +
+                                " - R$ " + String.format("%.2f", it.getValue()));
+                    }
+
+                    break;
             }
+
 
 
         } while (op != 0);
@@ -312,6 +342,7 @@ public class Main {
         System.out.println("[3]-Sensores");
         System.out.println("[4]-Clintes e Reservas");
         System.out.println("[5]-Pagamentos");
+        System.out.println("[6]-Processamento de Contratos");
         System.out.println("[0]-SAIR");
     }
 
