@@ -207,8 +207,8 @@ public class Main {
                     }while (opX != 0);
                     break;
 
-                case 4:
-
+                case 4:                     //RESERVAS
+                    System.out.println("=== Sistema de Reservas ===");
                     System.out.println("Nome do cliente:");
                     String clientName = sc.next();
 
@@ -261,7 +261,7 @@ public class Main {
 
                     break;
 
-                case 5:
+                case 5:                         //PAGAMENTOS
                     System.out.println("=== Sistema de Processamento de Pagamentos ===");
                     System.out.println("Descrição do pagamento:");
                     sc.next();
@@ -298,7 +298,9 @@ public class Main {
 
                     System.out.println(payment);
                     break;
-                case 6:
+
+                case 6:                         //CONTRATOS
+                    System.out.println("=== Sistema de Processamento de Contratos ===");
                     System.out.println("Entre os dados do contrato >>");
 
                     System.out.print("Numero: ");
@@ -321,8 +323,7 @@ public class Main {
 
                     System.out.println("Parcelas:");
                     for (Installment it : contract.getInstallments()) {
-                        System.out.println(it.getDueDate().format(fmt) +
-                                " - R$ " + String.format("%.2f", it.getValue()));
+                        System.out.println(it.getDueDate().format(fmt) + " - R$ " + String.format("%.2f", it.getValue()));
                     }
 
                     break;
