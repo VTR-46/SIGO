@@ -3,6 +3,7 @@ package application;
 import model.entities.*;
 import model.entities.enums.ReserveStatus;
 import model.entities.enums.SensorStatus;
+import model.services.PaymentService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -259,6 +260,41 @@ public class Main {
 
                     break;
 
+                case 5:
+                    System.out.println("=== Sistema de Processamento de Pagamentos ===");
+                    System.out.println("Descrição do pagamento:");
+                    String descP = sc.next();
+                    System.out.println("Valor do pagamento:");
+                    double amountP = sc.nextDouble();
+                    LocalDate paymantDate = LocalDate.now();
+
+                    Payment payment = new Payment(amountP, descP, paymantDate);
+
+                    System.out.println("Escolha o metodo de pagamento [1]-Pix [2]-Cartão [3]-Promicional| :");
+                    int pyOp = sc.nextInt();
+
+                    double taxP = 0;
+                    PaymentService paymentService = null;
+                    if (pyOp == 1){
+                        payment.setPaymentType("Pix");
+                        paymentService = new PixPayment();
+                        taxP = paymentService.fee(payment);
+
+                    } else if (pyOp == 2) {
+                        payment.setPaymentType("Cartão");
+                        paymentService = new CardPayment();
+                        taxP = paymentService.fee(payment);
+                    } else if (pyOp == 3) {
+                        payment.setPaymentType("Promocional");
+                        paymentService = new PromotionalPayment();
+                        taxP = paymentService.fee(payment);
+                    }
+
+                    payment.setTax(taxP);
+                    double af = paymentService.netPayment(payment);
+                    payment.setFinalAmount(af);
+
+                    System.out.println(payment);
 
             }
 
@@ -275,6 +311,7 @@ public class Main {
         System.out.println("[2]-Máquinas/Produção");
         System.out.println("[3]-Sensores");
         System.out.println("[4]-Clintes e Reservas");
+        System.out.println("[5]-Pagamentos");
         System.out.println("[0]-SAIR");
     }
 
