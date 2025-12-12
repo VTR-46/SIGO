@@ -264,7 +264,8 @@ public class Main {
                 case 5:
                     System.out.println("=== Sistema de Processamento de Pagamentos ===");
                     System.out.println("Descrição do pagamento:");
-                    String descP = sc.next();
+                    sc.next();
+                    String descP = sc.nextLine();
                     System.out.println("Valor do pagamento:");
                     double amountP = sc.nextDouble();
                     LocalDate paymantDate = LocalDate.now();

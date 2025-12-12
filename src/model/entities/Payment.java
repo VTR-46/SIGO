@@ -65,8 +65,8 @@ public class Payment {
                 "\nData: " + date +
                 "\nDescrição: " + description +
                 "\nTipo de pagamento: " + getPaymentType() +
-                "\nTaxa: "+ getTax() +
-                "\nValor final: " + getFinalAmount();
+                "\nTaxa: R$"+ String.format("%.2f", getTax()) +
+                "\nValor final: R$" + String.format("%.2f", getFinalAmount());
     }
 
 

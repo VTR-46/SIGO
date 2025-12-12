@@ -34,7 +34,7 @@ public class ReserveItem {
         return  "\n===================================="+
                 "\nDestino: " + destination.getName() +
                 "\nQuantidade: " + amount +
-                "\nPreço unitario: R$"+ destination.getPrice() +
-                "\nTotal: "+ totalP();
+                "\nPreço unitario: R$"+ String.format("%.2f", destination.getPrice()) +
+                "\nTotal: R$"+ totalP();
     }
 }
